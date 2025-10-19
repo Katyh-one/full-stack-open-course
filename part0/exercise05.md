@@ -1,4 +1,7 @@
 ```mermaid
+---
+title: Single page app
+---
 sequenceDiagram
     participant browser
     participant server
@@ -20,6 +23,6 @@ sequenceDiagram
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
     activate server
-    server->> browser: [{"content":"OMG", "date": "2025-09-12T08:04:42.516Z"}, … ]
+    server-->> browser: [{"content":"OMG", "date": "2025-09-12T08:04:42.516Z"}, … ]
     Deactivate server
 ```
