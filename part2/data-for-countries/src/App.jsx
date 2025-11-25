@@ -11,11 +11,9 @@ function App() {
   const [weather, setWeather] = useState('');
 
   useEffect(() => {
-    console.log('effect');
     countryService.getAll().then(initialCountries => {
       setCountry(initialCountries);
       getWeatherByLongLat(60.16952, 24.93545).then(data => {
-        console.log('Fetched weather data:', data);
         setWeather(data);
       });
     });
@@ -32,7 +30,6 @@ function App() {
       const [lat, long] = selectedCountry.latlng;
       getWeatherByLongLat(lat, long).then(weatherData => {
         setWeather(weatherData);
-        console.log('Weather data:', weatherData);
       });
     }
   }, [selectedCountry]);

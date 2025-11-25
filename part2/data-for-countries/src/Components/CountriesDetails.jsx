@@ -1,8 +1,6 @@
 import { Weather } from './Weather';
 
 export const CountriesDetails = ({ country, weather }) => {
-  console.log('weather data:', weather);
-  console.log('country details:', country);
   return (
     <div>
       <h2>{country.name.common}</h2>

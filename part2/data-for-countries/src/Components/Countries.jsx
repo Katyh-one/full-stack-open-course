@@ -1,5 +1,4 @@
 export const Countries = ({ countries, handleShowDetails }) => {
-  console.log(countries);
   return (
     <div>
       {countries.map(country => (
@@ -7,7 +6,7 @@ export const Countries = ({ countries, handleShowDetails }) => {
           <p>
             {country.name.common}
             <button onClick={() => handleShowDetails(country.name.common)}>show</button>
-          </p>          
+          </p>
         </div>
       ))}
     </div>

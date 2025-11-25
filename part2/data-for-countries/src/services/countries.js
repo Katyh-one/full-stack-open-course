@@ -6,13 +6,9 @@ export const getAll = () => {
   return request.then(response => response.data);
 };
 
-export const getByName = (name) => {
+export const getByName = name => {
   const request = axios.get(`${baseUrl}/name/${name}`);
   return request.then(response => response.data);
 };
-
-console.log('country service loaded');
-console.log(baseUrl);
-console.log('all countries', getAll());
 
 export default { getAll, getByName };
