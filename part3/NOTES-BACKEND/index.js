@@ -76,7 +76,7 @@ app.post('/api/notes', (request, response) => {
   };
 
   notes = notes.concat(note);
-  
+
   console.log(note);
   response.json(note);
 });
@@ -89,7 +89,7 @@ app.post('/api/notes', (request, response) => {
 // });
 
 // binding the http server to the app listening for requests sent to port 3001
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
