@@ -14,8 +14,13 @@ mongoose.connect(url, { family: 4 })
   })
 
 const personSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  number: { type: String, required: true, unique: true }
+  name: { type: String, required: true, unique: true, minlength: 3 },
+  number: { type: String, required: true, unique: true, minlength: 8, validate: {
+    validator: function(v) {
+      return /\d{2,3}-\d{5,}/.test(v);
+    },
+    message: props => `${props.value} is not a valid phone number! Format should be XX-XXXXX or XXX-XXXXX.`
+  }}
 });
 
 // turns the id into a string as otherwise would be an object
