@@ -39,11 +39,13 @@ app.get('/api/persons', (request, response) => {
 });
 
 app.get('/info', (request, response) => {
-  const info = `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`;
-  response.send(info);
+  Person.find({}).then(persons => {
+    const info = `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`;
+    response.send(info);
+  });
 });
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
     .then(person => {
       if (person) {
