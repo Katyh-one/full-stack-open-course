@@ -5,7 +5,6 @@ import { PersonForm } from './components/PersonForm';
 import personsService from './services/persons';
 import { Notification } from './components/Notification';
 
-
 const App = () => {
   const [persons, setPersons] = useState([{ name: 'Arto Hellas', number: '040-1234567', id: 1 }]);
   const [newName, setNewName] = useState('');
@@ -21,7 +20,6 @@ const App = () => {
     });
   }, []);
 
-
   const addPerson = event => {
     event.preventDefault();
     if (persons.map(person => person.name).includes(newName)) {
@@ -34,25 +32,26 @@ const App = () => {
         if (person) {
           const updatedPerson = { ...person, number: newNumber };
 
-          personsService.update(person.id, updatedPerson).then(returnedPerson => {
-            setPersons(persons.map(p => (p.id !== person.id ? p : returnedPerson)));
-            setNewName('');
-            setNewNumber('');
-            setErrorMessage(`Updated ${returnedPerson.name}'s number`);
-            setColor('green');
-            setTimeout(() => {
-              setErrorMessage(null);
-            }, 10000);
-          }).catch(() => {
-            setErrorMessage(
-              `Information of ${person.name} has already been removed from server`
-            );
-            setTimeout(() => {
-              setErrorMessage(null);
-            }, 10000);
-            setPersons(persons.filter(p => p.id !== person.id));
-            setColor('red');
-          });
+          personsService
+            .update(person.id, updatedPerson)
+            .then(returnedPerson => {
+              setPersons(persons.map(p => (p.id !== person.id ? p : returnedPerson)));
+              setNewName('');
+              setNewNumber('');
+              setErrorMessage(`Updated ${returnedPerson.name}'s number`);
+              setColor('green');
+              setTimeout(() => {
+                setErrorMessage(null);
+              }, 10000);
+            })
+            .catch(() => {
+              setErrorMessage(`Information of ${person.name} has already been removed from server`);
+              setTimeout(() => {
+                setErrorMessage(null);
+              }, 10000);
+              setPersons(persons.filter(p => p.id !== person.id));
+              setColor('red');
+            });
           return;
         }
       }
@@ -63,16 +62,25 @@ const App = () => {
       number: newNumber,
       id: String(persons.length + 1)
     };
-    personsService.create(nameObject).then(returnedPerson => {
-      setPersons(persons.concat(returnedPerson));
-      setNewName('');
-      setNewNumber('');
-      setColor('green');
-      setErrorMessage(`Added ${returnedPerson.name}`);
-      setTimeout(() => {
-        setErrorMessage(null);
-      }, 10000);
-    });
+    personsService
+      .create(nameObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName('');
+        setNewNumber('');
+        setColor('green');
+        setErrorMessage(`Added ${returnedPerson.name}`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 10000);
+      })
+      .catch(error => {
+        setErrorMessage(error.response.data.error);
+        setColor('red');
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 10000);
+      });
   };
 
   const handleNameChange = event => {
