@@ -14,8 +14,8 @@ mongoose.connect(url, { family: 4 })
   })
 
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String    
+  name: { type: String, required: true, unique: true },
+  number: { type: String, required: true, unique: true }
 });
 
 // turns the id into a string as otherwise would be an object
